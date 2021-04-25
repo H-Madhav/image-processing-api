@@ -7,8 +7,6 @@ const handleImageValidation = (req: Request, res: Response, next: Function) => {
     const width: string = req.query.width as string;
     const height: string = req.query.height as string;
 
-    console.log(Number(width), Number(width) === NaN , Number(height) == NaN , Number(width) <= 0 , Number(height) <= 0)
-
     const fileNameAndExtentionArr: Array<String> = fileName.split('.');
 
     if(!fileNameAndExtentionArr[0]) {

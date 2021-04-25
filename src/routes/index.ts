@@ -5,9 +5,10 @@ const routes = express.Router();
 
 
 routes.get("/", (req:Request, res: Response) => {
-  res.redirect('/api/images');
+  res.redirect('/api/images?fileName=fjord.jpg');
 });
 
-routes.use('/images', images);
+
+routes.use('/api/images', images);
 
 export default routes

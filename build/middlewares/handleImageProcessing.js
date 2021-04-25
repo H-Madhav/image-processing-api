@@ -35,40 +35,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var supertest_1 = __importDefault(require("supertest"));
-var index_1 = __importDefault(require("../index"));
-var request = supertest_1.default(index_1.default);
-describe('GET /', function () {
-    it('redirect the page temporarily', function (done) { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/')];
-                case 1:
-                    response = _a.sent();
-                    expect(response.status).toBe(302);
-                    done();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
-describe('GET /api/images?fileName=fjord.jpg', function () {
-    it('respond with status 200', function (done) { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images?fileName=fjord.jpg')];
-                case 1:
-                    response = _a.sent();
-                    expect(response.status).toBe(200);
-                    done();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
+var imageHelpers_1 = require("../helpers/imageHelpers");
+var path = require('path');
+var handleImageProcessing = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var fileName, width, height, flag, processedImageName, processedImageFlag, isCreated;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                fileName = req.query.fileName;
+                width = req.query.width;
+                height = req.query.height;
+                return [4 /*yield*/, imageHelpers_1.findFullImage(fileName)];
+            case 1:
+                flag = _a.sent();
+                if (!flag) return [3 /*break*/, 6];
+                if (!(!width && !height)) return [3 /*break*/, 2];
+                return [2 /*return*/, res.status(200).sendFile(path.join(__dirname, imageHelpers_1.imagePath, fileName))];
+            case 2:
+                processedImageName = imageHelpers_1.getProcessedImageName(fileName, width, height);
+                return [4 /*yield*/, imageHelpers_1.findProcessedImage(processedImageName)];
+            case 3:
+                processedImageFlag = _a.sent();
+                if (!processedImageFlag) return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).sendFile(path.join(__dirname, imageHelpers_1.processedImagePath, processedImageName))];
+            case 4: return [4 /*yield*/, imageHelpers_1.createProcessedImage(fileName, processedImageName, width, height)];
+            case 5:
+                isCreated = _a.sent();
+                if (isCreated) {
+                    return [2 /*return*/, res.status(200).sendFile(path.join(__dirname, imageHelpers_1.processedImagePath, processedImageName))];
+                }
+                else {
+                    return [2 /*return*/, res.status(500).send("Something bad happend")];
+                }
+                _a.label = 6;
+            case 6: return [2 /*return*/, res.status(404).send("Image not found")];
+        }
+    });
+}); };
+exports.default = handleImageProcessing;

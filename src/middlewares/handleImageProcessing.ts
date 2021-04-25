@@ -14,16 +14,16 @@ const handleImageProcessing = async(req: Request, res: Response, next: Function)
 
     if(flag) {
         if(!width && !height) {
-            return res.sendFile(path.join(__dirname, imagePath, fileName));
+            return res.status(200).sendFile(path.join(__dirname, imagePath, fileName));
         }else {
             const processedImageName = getProcessedImageName(fileName, width, height);
             const processedImageFlag = await findProcessedImage(processedImageName);
             if(processedImageFlag) {
-                return res.sendFile(path.join(__dirname, processedImagePath, processedImageName));
+                return res.status(200).sendFile(path.join(__dirname, processedImagePath, processedImageName));
             }else {
                 const isCreated = await createProcessedImage(fileName, processedImageName, width, height);
                 if(isCreated) {
-                    return res.sendFile(path.join(__dirname, processedImagePath, processedImageName));
+                    return res.status(200).sendFile(path.join(__dirname, processedImagePath, processedImageName));
                 }else {
                     return res.status(500).send("Something bad happend");
                 }
