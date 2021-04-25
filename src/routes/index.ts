@@ -1,10 +1,13 @@
-const express = require('express')
-import { Request, Response } from 'express'
-import logger from '../utilities/logger'
-const routes = express.Router()
+import { Request, Response } from 'express';
+import images from './api/images';
+const express = require('express');
+const routes = express.Router();
 
-routes.get('/', logger, (req: Request, res: Response) => {
-  res.send('Hello World!')
-})
+
+routes.get("/", (req:Request, res: Response) => {
+  res.redirect('/api/images');
+});
+
+routes.use('/images', images);
 
 export default routes
