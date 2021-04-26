@@ -47,7 +47,7 @@ export const createProcessedImage = async (
             await fileData.close()
             return true
         }else {
-            await fs.mkdir(path.join(__dirname, processedImagePath, imageName));
+            await fs.mkdir(path.join(__dirname, processedImagePath));
             const fileData = await fs.open( path.join(__dirname, processedImagePath, imageName),'w+')
             fileData.write(imageData)
             await fileData.close()
