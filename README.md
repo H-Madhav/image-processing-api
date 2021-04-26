@@ -2,7 +2,7 @@
 
 # Getting Started with image-processing-api
 
-This project was bootstrapped with [TypeScript & Express](https://github.com/madhav1993/image-processing-api).
+This project was bootstrapped with [TypeScript, Express & jasmine ](https://github.com/madhav1993/image-processing-api).
 
 ## Install all the dependency
 
