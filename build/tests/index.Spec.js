@@ -41,9 +41,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
+var imageHelpers_1 = require("../helpers/imageHelpers");
+var path = require('path');
 var request = supertest_1.default(index_1.default);
 describe('GET /', function () {
-    it('redirect the page temporarily', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('redirect the page temporarily', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -51,14 +53,13 @@ describe('GET /', function () {
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(302);
-                    done();
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('GET /api/images?fileName=fjord.jpg', function () {
-    it('respond with status 200', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('respond with status 200', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -66,9 +67,27 @@ describe('GET /api/images?fileName=fjord.jpg', function () {
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
-                    done();
                     return [2 /*return*/];
             }
         });
     }); });
 });
+describe('create processed image or serve from cashe', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var flag;
+    return __generator(this, function (_a) {
+        flag = imageHelpers_1.findProcessedImage("600x600fjord.jpg");
+        it('return true of false', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, imageHelpers_1.createProcessedImage("fjord.jpg", "600x600fjord.jpg", "600", "600")];
+                    case 1:
+                        response = _a.sent();
+                        flag ? expect(response).toBeFalsy() : expect(response).toBeTruthy();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        return [2 /*return*/];
+    });
+}); });
