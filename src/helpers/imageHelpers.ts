@@ -40,15 +40,23 @@ export const createProcessedImage = async (
     height: String
 ): Promise<Boolean> => {
     try {
-        const imageData = await sharp(path.join(__dirname, imagePath, fileName)).resize(width ? Number(width) : 0, height ? Number(height) : 0).toBuffer()
+        const imageData = await sharp(path.join(__dirname, imagePath, fileName))
+            .resize(width ? Number(width) : 0, height ? Number(height) : 0)
+            .toBuffer()
         if (existsSync(path.join(__dirname, processedImagePath))) {
-            const fileData = await fs.open( path.join(__dirname, processedImagePath, imageName),'w+')
+            const fileData = await fs.open(
+                path.join(__dirname, processedImagePath, imageName),
+                'w+'
+            )
             fileData.write(imageData)
             await fileData.close()
             return true
-        }else {
-            await fs.mkdir(path.join(__dirname, processedImagePath));
-            const fileData = await fs.open( path.join(__dirname, processedImagePath, imageName),'w+')
+        } else {
+            await fs.mkdir(path.join(__dirname, processedImagePath))
+            const fileData = await fs.open(
+                path.join(__dirname, processedImagePath, imageName),
+                'w+'
+            )
             fileData.write(imageData)
             await fileData.close()
             return true

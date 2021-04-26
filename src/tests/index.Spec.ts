@@ -1,10 +1,11 @@
 import { promises as fs, existsSync } from 'fs'
 import supertest from 'supertest'
-import app from '../index';
+import app from '../index'
 import {
-    createProcessedImage, processedImagePath
-} from '../helpers/imageHelpers';
-const path = require('path');
+    createProcessedImage,
+    processedImagePath,
+} from '../helpers/imageHelpers'
+const path = require('path')
 
 const request = supertest(app)
 
@@ -24,8 +25,14 @@ describe('GET /api/images?fileName=fjord.jpg', () => {
 
 describe('Create processed image ', async () => {
     it('return true', async () => {
-        if (existsSync(path.join(__dirname, processedImagePath, '600x600fjord.jpg'))) {
-            await fs.unlink(path.join(__dirname, processedImagePath, '600x600fjord.jpg'))
+        if (
+            existsSync(
+                path.join(__dirname, processedImagePath, '600x600fjord.jpg')
+            )
+        ) {
+            await fs.unlink(
+                path.join(__dirname, processedImagePath, '600x600fjord.jpg')
+            )
         }
         const response = await createProcessedImage(
             'fjord.jpg',
