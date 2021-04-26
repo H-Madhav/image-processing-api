@@ -1,9 +1,10 @@
+import { promises as fs, existsSync } from 'fs'
 import supertest from 'supertest'
-import app from '../index'
+import app from '../index';
 import {
-    createProcessedImage,
-    findProcessedImage,
-} from '../helpers/imageHelpers'
+    createProcessedImage, processedImagePath
+} from '../helpers/imageHelpers';
+const path = require('path');
 
 const request = supertest(app)
 
@@ -21,15 +22,17 @@ describe('GET /api/images?fileName=fjord.jpg', () => {
     })
 })
 
-describe('create processed image or serve from cashe', async () => {
-    const flag = findProcessedImage('600x600fjord.jpg')
-    it('return true or false', async () => {
+describe('Create processed image ', async () => {
+    it('return true', async () => {
+        if (existsSync(path.join(__dirname, processedImagePath, '600x600fjord.jpg'))) {
+            await fs.unlink(path.join(__dirname, processedImagePath, '600x600fjord.jpg'))
+        }
         const response = await createProcessedImage(
             'fjord.jpg',
             '600x600fjord.jpg',
             '600',
             '600'
         )
-        flag ? expect(response).toBeFalsy() : expect(response).toBeTruthy()
+        expect(response).toBeTruthy()
     })
 })
