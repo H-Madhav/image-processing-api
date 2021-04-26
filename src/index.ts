@@ -6,7 +6,7 @@ const port = 3002
 app.use('/', routes)
 
 app.listen(port, () => {
-  console.log(`app listening at http://localhost:${port}`)
+    console.log(`app listening at http://localhost:${port}`)
 })
 
-export default app;
+export default app
