@@ -14,27 +14,27 @@ In the project directory, you can run:
 
 ### `npm run start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.
 Open [http://localhost:3002](http://localhost:3002) to view it in the browser.
 
-The page will reload if you make edits.\
+The page will reload if you make edits.
 
 ### `npm run test`
 
-Create a build to produce js files to run test, copy none .ts file(assets) and launches the test runner.\
+Create a build to produce js files to run test, copy none .ts file(assets) and launches the test runner.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.
 It correctly compiles all ts file into js file and copy assets into build folder.
 
 ### `npm run prettier`
 
-Runs all the recommended prettier config.\
+Runs all the recommended prettier config.
 
 ### `npm run lint`
 
-Runs all the recommended lint config.\
+Runs all the recommended lint config.
 
 ## `PROJECT SPECIFICATION`
 
