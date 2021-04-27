@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-const handleImageValidation = (req: Request, res: Response, next: Function) => {
+const handleImageValidation = (req: Request, res: Response, next: Function):  void | Response => {
     const fileName: string = (req.query.fileName as string) || ''
     const width: string = req.query.width as string
     const height: string = req.query.height as string

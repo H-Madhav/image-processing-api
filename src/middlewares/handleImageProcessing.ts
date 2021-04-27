@@ -13,7 +13,7 @@ const handleImageProcessing = async (
     req: Request,
     res: Response,
     next: Function
-) => {
+): Promise<void | Response> => {
     const fileName: String = req.query.fileName as string
     const width: String = req.query.width as string
     const height: String = req.query.height as string
